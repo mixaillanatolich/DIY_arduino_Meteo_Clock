@@ -34,15 +34,15 @@
 // управление яркостью
 #define BRIGHT_CONTROL 1      // 0/1 - запретить/разрешить управление яркостью (при отключении яркость всегда будет макс.)
 #define BRIGHT_THRESHOLD 150  // величина сигнала, ниже которой яркость переключится на минимум (0-1023)
-#define LED_BRIGHT_MAX 125    // макс яркость светодиода СО2 (0 - 255)
-#define LED_BRIGHT_MIN 125     // мин яркость светодиода СО2 (0 - 255)
-#define LCD_BRIGHT_MAX 125    // макс яркость подсветки дисплея (0 - 255)
-#define LCD_BRIGHT_MIN 25     // мин яркость подсветки дисплея (0 - 255)
+#define LED_BRIGHT_MAX 225    // макс яркость светодиода СО2 (0 - 255)
+#define LED_BRIGHT_MIN 13     // мин яркость светодиода СО2 (0 - 255)
+#define LCD_BRIGHT_MAX 128    // макс яркость подсветки дисплея (0 - 255)
+#define LCD_BRIGHT_MIN 9     // мин яркость подсветки дисплея (0 - 255)
 
 #define BLUE_YELLOW 1       // жёлтый цвет вместо синего (1 да, 0 нет) но из за особенностей подключения жёлтый не такой яркий
 #define DISP_MODE 1         // в правом верхнем углу отображать: 0 - год, 1 - день недели, 2 - секунды
 #define WEEK_LANG 0         // язык дня недели: 0 - английский, 1 - русский (транслит)
-#define DEBUG 1             // вывод на дисплей лог инициализации датчиков при запуске. Для дисплея 1602 не работает! Но дублируется через порт!
+#define DEBUG 0             // вывод на дисплей лог инициализации датчиков при запуске. Для дисплея 1602 не работает! Но дублируется через порт!
 #define PRESSURE 1          // 0 - график давления, 1 - график прогноза дождя (вместо давления). Не забудь поправить пределы гроафика
 #define CO2_SENSOR 1        // включить или выключить поддержку/вывод с датчика СО2 (1 вкл, 0 выкл)
 #define DISPLAY_TYPE 1      // тип дисплея: 1 - 2004 (большой), 0 - 1602 (маленький)
@@ -306,13 +306,13 @@ void drawClock(byte hours, byte minutes, byte x, byte y, boolean dotState) {
 
 #if (WEEK_LANG == 0)
 static const char *dayNames[]  = {
-  "Sund",
-  "Mond",
-  "Tues",
-  "Wedn",
-  "Thur",
-  "Frid",
-  "Satu",
+  "Sun ",
+  "Mon ",
+  "Tue ",
+  "Wed ",
+  "Thu ",
+  "Fri ",
+  "Sat ",
 };
 #else
 static const char *dayNames[]  = {
@@ -438,8 +438,8 @@ void setLED(byte color) {
     case 3:
       if (!BLUE_YELLOW) analogWrite(LED_B, LED_ON);
       else {
-        analogWrite(LED_R, LED_ON+80);
-        analogWrite(LED_G, LED_ON-105);
+        analogWrite(LED_R, 210/*125+80*/);
+        analogWrite(LED_G, 17/*125-105*/);
       }
       break;
   }
